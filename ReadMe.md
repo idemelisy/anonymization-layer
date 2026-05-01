@@ -9,10 +9,11 @@ This guide explains everything from zero:
 4) Load this extension into Chrome
 5) Test that neutralization works
 
+-----------------
 0) Get the code
 Click the green "Code" button at the top of this GitHub page and select "Download ZIP". Extract the folder to your desktop.
 -----------------
-2) Install Ollama
+1) Install Ollama
 
 Official download page:
 https://ollama.com/download
