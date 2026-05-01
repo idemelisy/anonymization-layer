@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Local Privacy Firewall",
+  "version": "1.0.0",
+  "description": "Neutralize text in editable fields using a local Ollama model.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://localhost:11434/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Local Privacy Firewall"
+  }
+}

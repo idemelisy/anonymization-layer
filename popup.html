@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Local Privacy Firewall</title>
+    <style>
+      body {
+        margin: 0;
+        width: 260px;
+        font-family: Arial, sans-serif;
+        background: #f9fafb;
+        color: #111827;
+      }
+
+      .wrap {
+        padding: 14px;
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: 14px;
+      }
+
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      #status {
+        margin-top: 10px;
+        font-size: 12px;
+        color: #374151;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Local Privacy Firewall</h1>
+      <div class="row">
+        <label for="enabled">Enabled</label>
+        <input id="enabled" type="checkbox" />
+      </div>
+      <p id="status">Loading...</p>
+    </div>
+
+    <script>
+      const toggle = document.getElementById("enabled");
+      const status = document.getElementById("status");
+
+      async function init() {
+        const state = await chrome.storage.local.get("enabled");
+        const isEnabled = typeof state.enabled === "boolean" ? state.enabled : true;
+        toggle.checked = isEnabled;
+        renderStatus(isEnabled);
+      }
+
+      toggle.addEventListener("change", async () => {
+        const isEnabled = toggle.checked;
+        await chrome.storage.local.set({ enabled: isEnabled });
+        renderStatus(isEnabled);
+      });
+
+      function renderStatus(isEnabled) {
+        status.textContent = isEnabled
+          ? "Neutralize controls are active on editable fields."
+          : "Extension is off. No neutralize controls will appear.";
+      }
+
+      init().catch(() => {
+        status.textContent = "Could not load extension state.";
+      });
+    </script>
+  </body>
+</html>
